@@ -4,4 +4,3 @@ matplotlib
 weasyprint
 jinja2
 reportlab
-libpango
