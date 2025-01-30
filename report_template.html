@@ -3,45 +3,67 @@
 <head>
     <title>Sustainability Report</title>
     <style>
+        body {
+            font-family: sans-serif; /* Use a web-safe font */
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid black;
-            padding: 8px;
+            border: 1px solid #ccc;
+            padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #f0f0f0;
         }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: smaller;
+        }
+        /* Add more styles as needed */
     </style>
 </head>
 <body>
-    <h1>{{ title }}</h1>
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Metric</th>
-                <th>2022</th>
-                <th>2023</th>
-                <th>2023 (Target)</th>
-                <th>Progress</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for metric in metrics %}
-            <tr>
-                <td>{{ metric.Metric }}</td>
-                <td>{{ metric['2022'] }}</td>
-                <td>{{ metric['2023'] }}</td>
-                <td>{{ metric['2023 (Target)'] }}</td>
-                <td>{{ metric.Progress }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section>
+        <h2>Sustainability Metrics</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>2023 (Target)</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for metric in metrics %}
+                <tr>
+                    <td>{{ metric.Metric }}</td>
+                    <td>{{ metric['2022'] }}</td>
+                    <td>{{ metric['2023'] }}</td>
+                    <td>{{ metric['2023 (Target)'] }}</td>
+                    <td>{{ metric.Progress }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
+    <footer class="footer">
+        Page {{ page }} of {{ pages }}  </footer>
 </body>
 </html>
