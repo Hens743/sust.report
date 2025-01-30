@@ -102,7 +102,8 @@
             <img src="energy_chart.png" alt="Energy Consumption Chart">
         </div>
         <p>
-            </p>
+           [Add a summary and analysis of energy consumption.]
+        </p>
     </div>
 
     <div class="section">
@@ -132,26 +133,72 @@
                     <td>700 kg</td>
                     <td class="warning">-20%</td>
                 </tr>
+                {% if waste_data %}  {% for waste in waste_data %}
+                        <tr>
+                            <td>{{ waste.type }}</td>
+                            <td>{{ waste['2022'] }}</td>
+                            <td>{{ waste['2023'] }}</td>
+                            <td>{{ waste.target }}</td>
+                            <td {% if waste.progress < 0 %}class="warning"{% else %}class="highlight"{% endif %}>{{ waste.progress }}%</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         <div class="chart-container">
             <img src="waste_chart.png" alt="Waste Management Chart">
         </div>
         <p>
-            </p>
+            [Add a summary and analysis of waste management efforts.]
+        </p>
+    </div>
+
+        <div class="section">
+        <h2>Water Usage</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>Target</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if water_data %}  {% for water in water_data %}
+                        <tr>
+                            <td>{{ water.metric }}</td>
+                            <td>{{ water['2022'] }}</td>
+                            <td>{{ water['2023'] }}</td>
+                            <td>{{ water.target }}</td>
+                            <td {% if water.progress < 0 %}class="warning"{% else %}class="highlight"{% endif %}>{{ water.progress }}%</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="chart-container">
+            <img src="water_chart.png" alt="Water Usage Chart">
+        </div>
+        <p>
+            [Add a summary and analysis of water usage.]
+        </p>
     </div>
 
     <div class="page-break"></div>
     <div class="section">
         <h2>Future Initiatives</h2>
         <p>
-            </p>
+            [Outline your plans for future sustainability improvements.]
+        </p>
     </div>
 
     <div class="section">
         <h2>Conclusion</h2>
         <p>
-            </p>
+            [Summarize your overall progress and commitment to sustainability.]
+        </p>
     </div>
 
     <div class="footer">
