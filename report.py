@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import io
+import base64
 
-# Sample Data (Replace with actual data integration)
+# Sample Data (REPLACE THIS WITH YOUR ACTUAL DATA INTEGRATION)
 data = {
     'Metric': ['Energy Consumption', 'Waste Generation', 'Water Usage', 'CO2 Emissions'],
     '2022': [15000, 5000, 2000, 10000],
@@ -12,14 +14,22 @@ df = pd.DataFrame(data)
 
 st.title("Data-Driven Sustainability Reporting Tool Prototype")
 
-# Data Input Section (Simplified)
+# Data Input Section (Simplified - REPLACE WITH REAL INPUT)
 st.subheader("Enter Sustainability Data (Simplified)")
 
-# (In a real app, you would have more sophisticated input methods and data validation)
-
-# Sample manual input fields (replace with actual data entry)
+# Example manual input fields (replace with actual data entry)
 energy_input = st.number_input("Energy Consumption (2023)", value=14500)  # Example
 df.loc[df['Metric'] == 'Energy Consumption', '2023'] = energy_input
+
+waste_input = st.number_input("Waste Generation (2023)", value=4800)
+df.loc[df['Metric'] == 'Waste Generation', '2023'] = waste_input
+
+water_input = st.number_input("Water Usage (2023)", value=1900)
+df.loc[df['Metric'] == 'Water Usage', '2023'] = water_input
+
+co2_input = st.number_input("CO2 Emissions (2023)", value=9500)
+df.loc[df['Metric'] == 'CO2 Emissions', '2023'] = co2_input
+
 
 
 # Report Generation
@@ -43,17 +53,30 @@ st.dataframe(df[['Metric', 'Progress']])
 
 # Example Recommendations (replace with actual insights)
 st.subheader("Recommendations (Example)")
-if df.loc[df['Metric'] == 'Energy Consumption', 'Progress'].values[0] < 0:
-    st.write("- Consider investing in energy-efficient equipment.")
-else:
-    st.write("- Maintain current energy efficiency practices.")
 
-if df.loc[df['Metric'] == 'Waste Generation', 'Progress'].values[0] < 0:
-    st.write("- Implement a waste reduction program.")
-else:
-    st.write("- Continue waste reduction efforts.")
+for index, row in df.iterrows():
+    if row['Progress'] < 0:
+        st.write(f"- Consider improvement strategies for {row['Metric']}.")  # More general
+    else:
+        st.write(f"- Maintain current practices for {row['Metric']}.")
 
-# (In a real app, recommendations would be more sophisticated and data-driven)
+
+# Report Download Section
+st.subheader("Download Report")
+
+def generate_csv(df):
+    output = io.StringIO()
+    df.to_csv(output, index=False)
+    csv_string = output.getvalue()
+    return csv_string
+
+csv = generate_csv(df)
+
+b64 = base64.b64encode(csv.encode()).decode()
+href = f'data:file/csv;base64,{b64}'
+
+st.markdown(f'<a href="{href}" download="sustainability_report.csv">Download CSV Report</a>', unsafe_allow_html=True)
+
 
 # Placeholder for future features
 st.subheader("Future Features")
@@ -62,5 +85,4 @@ st.write("- More sophisticated data analysis and benchmarking")
 st.write("- Customizable reporting templates")
 st.write("- User authentication and role management")
 
-
-# Run the app: streamlit run your_script_name.py
+# To run: streamlit run your_script_name.py (replace with your filename)
