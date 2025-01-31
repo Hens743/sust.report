@@ -16,6 +16,7 @@ if "report_data" not in st.session_state:
     st.session_state.report_data = {
         "report_title": "Sustainability Report",
         "year": 2023,
+        "organization_number": "",  # Add organization number field
         "organization_name": "Example Company Name",
         "leadership_statement": "A message from leadership emphasizing our commitment to sustainability...",
         "reporting_period": "January 1, 2023 - December 31, 2023",
@@ -27,7 +28,6 @@ if "report_data" not in st.session_state:
         "governance": "Our board of directors oversees our sustainability strategy...",
         "stakeholder_engagement": "We engage with our stakeholders through surveys, community events, and online platforms...",
         "reporting_process": "This report was compiled by the sustainability team...",
-        "organization_number": "",  # Add organization number field
         "material_topics": [{"name": "Environmental Impact", "description": "Reducing our carbon footprint and minimizing waste..."}],
         "metrics": [{"name": "Energy Consumption", "2022": 15000, "2023_target": 14000, "2023": 14500}]
     }
