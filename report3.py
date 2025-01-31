@@ -1,118 +1,72 @@
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import io
-import base64
-import json
-from jinja2 import Template
-import os
-from weasyprint import HTML
-
-# Sample Data (REPLACE THIS WITH YOUR ACTUAL DATA INTEGRATION)
-data = {
-    'Metric': ['Energy Consumption', 'Waste Generation', 'Water Usage', 'CO2 Emissions'],
-    '2022': [15000, 5000, 2000, 10000],
-    '2023 (Target)': [14000, 4500, 1800, 9000]
-}
-df = pd.DataFrame(data)
-
-st.title("Data-Driven Sustainability Reporting Tool")
-
-# Data Input Section (Simplified - REPLACE WITH REAL INPUT)
-st.subheader("Enter Sustainability Data")
-
-energy_input = st.number_input("Energy Consumption (2023)", value=14500)
-df.loc[df['Metric'] == 'Energy Consumption', '2023'] = energy_input
-
-waste_input = st.number_input("Waste Generation (2023)", value=4800)
-df.loc[df['Metric'] == 'Waste Generation', '2023'] = waste_input
-
-water_input = st.number_input("Water Usage (2023)", value=1900)
-df.loc[df['Metric'] == 'Water Usage', '2023'] = water_input
-
-co2_input = st.number_input("CO2 Emissions (2023)", value=9500)
-df.loc[df['Metric'] == 'CO2 Emissions', '2023'] = co2_input
-
-
-# Report Generation
-st.subheader("Sustainability Report")
-
-# Display data as a table
-st.dataframe(df)
-
-# Bar chart visualization
-st.subheader("Progress Visualization")
-fig, ax = plt.subplots()
-df.set_index('Metric')[['2022', '2023']].plot(kind='bar', ax=ax)
-plt.title("Sustainability Performance")
-plt.ylabel("Units")
-st.pyplot(fig)
-
-# Progress towards targets
-st.subheader("Progress Towards Targets")
-df['Progress'] = ((df['2023'] - df['2022']) / (df['2023 (Target)'] - df['2022'])) * 100
-st.dataframe(df[['Metric', 'Progress']])
-
-# Recommendations
-st.subheader("Recommendations")
-for index, row in df.iterrows():
-    if row['Progress'] < 0:
-        st.write(f"- Consider improvement strategies for {row['Metric']}.")
-    else:
-        st.write(f"- Maintain current practices for {row['Metric']}.")
-
-
-# JSON and PDF Report Generation
-st.subheader("Download PDF Report")
-
-def generate_json(df):
-    try:
-        report_data = {
-            "report_title": "Sustainability Report",
-            "metrics": df.to_dict(orient='records'),
-            "year": 2023
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
         }
-        return json.dumps(report_data, indent=4)
-    except Exception as e:
-        st.error(f"Error generating JSON: {e}")
-        return None
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            font-style: italic;
+        }
+        /* Added styles for better table presentation */
+        table {
+            border-collapse: collapse; /* Collapse borders for a cleaner look */
+            width: 100%;
+        }
 
-def generate_pdf(json_data):
-    if json_data is None:
-        return None
+        th, td {
+            border: 1px solid #ddd; /* Add borders to table cells */
+            padding: 8px;
+            text-align: left;
+        }
 
-    try:
-        template_path = os.path.join(os.path.dirname(__file__), "report_template.html")
-        with open(template_path, "r") as f:
-            template_string = f.read()
-        template = Template(template_string)
+        th {
+            background-color: #f2f2f2; /* Light gray background for header */
+            font-weight: bold; /* Make header text bold */
+        }
 
-        data = json.loads(json_data)  # Load JSON data
+        /* Style for ordered lists if you use them later */
+        ol {
+          list-style-type: decimal; /* Use numbers for ordered lists */
+          margin-left: 20px;
+          margin-bottom: 10px;
+        }
 
-        html_output = template.render(data=data)  # Pass the entire data dictionary
-
-        pdf_bytes = HTML(string=html_output).write_pdf()
-
-        return pdf_bytes
-
-    except Exception as e:
-        st.error(f"Error generating PDF: {e}")
-        return None
-
-
-json_data = generate_json(df)
-
-if json_data:
-    pdf_bytes = generate_pdf(json_data)
-
-    if pdf_bytes:
-        b64 = base64.b64encode(pdf_bytes).decode()
-        href = f'data:application/pdf;base64,{b64}'
-        st.markdown(f'<a href="{href}" download="sustainability_report.pdf">Download PDF Report</a>', unsafe_allow_html=True)
-
-# Future features
-st.subheader("Future Features")
-st.write("- Integration with existing business systems")
-st.write("- More sophisticated data analysis and benchmarking")
-st.write("- Customizable reporting templates")
-st.write("- User authentication and role management")
+        /* Style for section headings to create space */
+        section {
+            margin-bottom: 2em; /* Add space between sections */
+        }
