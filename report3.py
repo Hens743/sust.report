@@ -11,24 +11,24 @@ st.set_page_config(layout="wide")
 
 st.title("Data-Driven Sustainability Reporting Tool")
 
-# Initialize report data in session state (as a dictionary to match the template)
+# Initialize report data in session state
 if "report_data" not in st.session_state:
     st.session_state.report_data = {
         "report_title": "Sustainability Report",
         "year": 2023,
-        "organization_name": "",
-        "leadership_statement": "",
-        "reporting_period": "",
-        "legal_form": "",
-        "ownership": "",
-        "location": "",
-        "employees": "",
-        "activities": "",
-        "governance": "",
-        "stakeholder_engagement": "",
-        "reporting_process": "",
-        "material_topics": [],  # List of dictionaries for material topics
-        "metrics": []  # List of dictionaries for metrics
+        "organization_name": "Example Company Name",
+        "leadership_statement": "A message from leadership emphasizing our commitment to sustainability...",
+        "reporting_period": "January 1, 2023 - December 31, 2023",
+        "legal_form": "Limited Liability Company (LLC)",
+        "ownership": "Privately held",
+        "location": "123 Main Street, Anytown, CA 91234",
+        "employees": "25 (15 full-time, 10 part-time)",
+        "activities": "We manufacture and sell sustainable widgets...",
+        "governance": "Our board of directors oversees our sustainability strategy...",
+        "stakeholder_engagement": "We engage with our stakeholders through surveys, community events, and online platforms...",
+        "reporting_process": "This report was compiled by the sustainability team...",
+        "material_topics": [{"name": "Environmental Impact", "description": "Reducing our carbon footprint and minimizing waste..."}],
+        "metrics": [{"name": "Energy Consumption", "2022": 15000, "2023_target": 14000, "2023": 14500}]
     }
 
 report_data = st.session_state.report_data
@@ -37,16 +37,16 @@ report_data = st.session_state.report_data
 
 st.subheader("Report Information")
 report_data["report_title"] = st.text_input("Report Title", value=report_data["report_title"])
-report_data["year"] = st.number_input("Year", value=report_data["year"], min_value=2000, max_value=2100)  # Year input
+report_data["year"] = st.number_input("Year", value=report_data["year"], min_value=2000, max_value=2100)
 
 st.subheader("Organization Information")
 report_data["organization_name"] = st.text_input("Organization Name", value=report_data["organization_name"])
-report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)  # Text area
+report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)
 report_data["reporting_period"] = st.text_input("Reporting Period", value=report_data["reporting_period"])
 report_data["legal_form"] = st.text_input("Legal Form", value=report_data["legal_form"])
 report_data["ownership"] = st.text_input("Ownership", value=report_data["ownership"])
 report_data["location"] = st.text_input("Location", value=report_data["location"])
-report_data["employees"] = st.text_input("Number of Employees", value=report_data["employees"])  # Text input for flexibility
+report_data["employees"] = st.text_input("Number of Employees", value=report_data["employees"])
 report_data["activities"] = st.text_area("Activities and Value Chain", value=report_data["activities"], height=150)
 report_data["governance"] = st.text_area("Governance", value=report_data["governance"], height=150)
 report_data["stakeholder_engagement"] = st.text_area("Stakeholder Engagement", value=report_data["stakeholder_engagement"], height=150)
@@ -54,10 +54,10 @@ report_data["reporting_process"] = st.text_area("Reporting Process", value=repor
 
 
 st.subheader("Material Topics")
-new_topic = st.text_input("New Material Topic")
+new_topic = st.text_input("New Material Topic (e.g., Community Engagement)")
 if st.button("Add Material Topic"):
-    if new_topic and new_topic not in [topic["name"] for topic in report_data["material_topics"]]: #Check for duplicate
-        report_data["material_topics"].append({"name": new_topic, "description": ""})
+    if new_topic and new_topic not in [topic["name"] for topic in report_data["material_topics"]]:
+        report_data["material_topics"].append({"name": new_topic, "description": "Describe the topic here..."}) #Example description
         st.success(f"Material Topic '{new_topic}' added successfully.")
     elif new_topic in [topic["name"] for topic in report_data["material_topics"]]:
         st.error(f"Material Topic '{new_topic}' already exists. Please enter a different metric.")
@@ -74,9 +74,9 @@ for i, topic in enumerate(report_data["material_topics"]):
             st.experimental_rerun()
 
 st.subheader("Metrics")
-new_metric = st.text_input("New Metric Name")
+new_metric = st.text_input("New Metric Name (e.g., Water Usage)")
 if st.button("Add Metric"):
-    if new_metric and new_metric not in [metric["name"] for metric in report_data["metrics"]]: #Check for duplicate
+    if new_metric and new_metric not in [metric["name"] for metric in report_data["metrics"]]:
         report_data["metrics"].append({"name": new_metric, "2022": None, "2023_target": None, "2023": None})
         st.success(f"Metric '{new_metric}' added successfully.")
     elif new_metric in [metric["name"] for metric in report_data["metrics"]]:
@@ -97,7 +97,7 @@ for i, metric in enumerate(report_data["metrics"]):
             del report_data["metrics"][i]
             st.experimental_rerun()
 
-st.session_state.report_data = report_data  # Update session state
+st.session_state.report_data = report_data
 
 
 # --- PDF Generation ---
