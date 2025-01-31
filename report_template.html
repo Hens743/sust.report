@@ -1,1 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Report</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            font-style: italic;
+        }
+        /* Added styles for better table presentation */
+        table {
+            border-collapse: collapse; /* Collapse borders for a cleaner look */
+            width: 100%;
+        }
+      
+        th, td {
+            border: 1px solid #ddd; /* Add borders to table cells */
+            padding: 8px;
+            text-align: left;
+        }
+      
+        th {
+            background-color: #f2f2f2; /* Light gray background for header */
+            font-weight: bold; /* Make header text bold */
+        }
+      
+        /* Style for ordered lists if you use them later */
+        ol {
+          list-style-type: decimal; /* Use numbers for ordered lists */
+          margin-left: 20px;
+          margin-bottom: 10px;
+        }
+      
+        /* Style for section headings to create space */
+        section {
+            margin-bottom: 2em; /* Add space between sections */
+        }
+    </style>
+</head>
+<body>
 
+    <h1>{{ data.report_title }} - {{ data.year }}</h1>
+
+    <section id="introduction">
+        <h2>1. Introduction</h2>
+        <p><b>1.1 About [Organization Name]:</b> [Briefly describe your organization. Include mission, values, and core activities.]</p>
+        <p><b>1.2 Statement from Leadership:</b> [A message from the head of the organization emphasizing commitment to sustainability.]</p>
+        <p><b>1.3 Reporting Period and Scope:</b> [Specify the time frame and what parts of the organization are included.]</p>
+    </section>
+
+    <section id="general-disclosures">
+        <h2>2. General Disclosures (GRI 2)</h2>
+        <p><b>2.1 Organizational Profile:</b></p>
+        <ul>
+            <li>Legal form: [e.g., Corporation, LLC, Non-profit]</li>
+            <li>Ownership: [e.g., Publicly traded, Privately held, Family-owned]</li>
+            <li>Location: [Full address]</li>
+            <li>Number of employees: [Number and breakdown (e.g., full-time, part-time)]</li>
+        </ul>
+        <p><b>2.2 Activities and Value Chain:</b> [Describe main activities and key suppliers and customers.]</p>
+        <p><b>2.3 Governance:</b> [Briefly describe your governance structure.]</p>
+        <p><b>2.4 Stakeholder Engagement:</b> [How do you engage with key stakeholders?]</p>
+        <p><b>2.5 Reporting Process:</b> [Explain how the report was prepared.]</p>
+    </section>
+
+    <section id="material-topics">
+        <h2>3. Material Topics (GRI 3)</h2>
+        <p><b>3.1 Identifying Material Topics:</b> [Describe the process used to identify material topics.]</p>
+        <p><b>3.2 List of Material Topics:</b></p>
+        <ul>
+            <li>[Material Topic 1]</li>
+            <li>[Material Topic 2]</li>
+            <li>[Material Topic 3]</li>
+        </ul>
+    </section>
+
+    <section id="topic-specific-disclosures">
+        <h2>4. Topic-Specific Disclosures</h2>
+
+        {% for metric in data.metrics %}
+        <h3>{{ metric.Metric }}</h3>
+        <ul>
+            <li><b>2022:</b> {{ metric['2022'] }}</li>
+            <li><b>2023:</b> {{ metric['2023'] }}</li>
+            <li><b>Target:</b> {{ metric['2023 (Target)'] }}</li>
+            </ul>
+        {% endfor %}
+
+        </section>
+
+    <section id="conclusion">
+        <h2>5. Conclusion</h2>
+        <p>[Summarize sustainability performance and future plans.]</p>
+    </section>
+
+    <section id="gri-index">
+        <h2>6. GRI Content Index</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>GRI Standard and Disclosure</th>
+                    <th>Description</th>
+                    <th>Page Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[GRI Standard and Disclosure (e.g., 102-1)]</td>
+                    <td>[Description of the disclosure]</td>
+                    <td>[Page number in the report]</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</body>
+</html>
