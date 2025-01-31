@@ -41,6 +41,7 @@ report_data["report_title"] = st.text_input("Report Title", value=report_data["r
 report_data["year"] = st.number_input("Year", value=report_data["year"], min_value=2000, max_value=2100)
 
 st.subheader("Organization Information")
+report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
 report_data["organization_name"] = st.text_input("Organization Name", value=report_data["organization_name"])
 report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)
 report_data["reporting_period"] = st.text_input("Reporting Period", value=report_data["reporting_period"])
@@ -52,7 +53,7 @@ report_data["activities"] = st.text_area("Activities and Value Chain", value=rep
 report_data["governance"] = st.text_area("Governance", value=report_data["governance"], height=150)
 report_data["stakeholder_engagement"] = st.text_area("Stakeholder Engagement", value=report_data["stakeholder_engagement"], height=150)
 report_data["reporting_process"] = st.text_area("Reporting Process", value=report_data["reporting_process"], height=150)
-report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
+
 
 st.subheader("Material Topics")
 new_topic = st.text_input("New Material Topic (e.g., Community Engagement)")
