@@ -42,7 +42,43 @@ report_data["year"] = st.number_input("Year", value=report_data["year"], min_val
 
 st.subheader("Organization Information")
 report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
+
 report_data["organization_name"] = st.text_input("Organization Name", value=report_data["organization_name"])
+org_number = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
+
+if st.button("Fetch Organization Information"):
+    if org_number:
+        try:
+            api_url = f"https://data.brreg.no/enhetsregisteret/api/enheter/{org_number}"
+            response = requests.get(api_url)
+            response.raise_for_status()
+            org_data = response.json()
+
+            # Extract relevant information from the API response and update report_data
+            report_data["organization_name"] = org_data.get("navn") if org_data.get("navn") else report_data["organization_name"]
+            report_data["legal_form"] = org_data.get("organisasjonsform", {}).get("beskrivelse") if org_data.get("organisasjonsform") else report_data["legal_form"]
+            report_data["hjemmeside"] = org_data.get("hjemmeside") if org_data.get("hjemmeside") else report_data.get("hjemmeside") # New: website
+            report_data["postadresse"] = f"{org_data.get('postadresse', {}).get('adresse', [])[0] if org_data.get('postadresse', {}).get('adresse') else ''} {org_data.get('postadresse', {}).get('postnummer') or ''} {org_data.get('postadresse', {}).get('poststed') or ''}" if org_data.get('postadresse') else report_data.get("postadresse")  # Improved post address
+            report_data["forretningsadresse"] = f"{org_data.get('forretningsadresse', {}).get('adresse', [])[0] if org_data.get('forretningsadresse', {}).get('adresse') else ''} {org_data.get('forretningsadresse', {}).get('postnummer') or ''} {org_data.get('forretningsadresse', {}).get('poststed') or ''}" if org_data.get('forretningsadresse') else report_data.get("forretningsadresse")  # Business address
+            report_data["naeringskode1"] = org_data.get("naeringskode1", {}).get("beskrivelse") if org_data.get("naeringskode1") else report_data.get("naeringskode1")  # Industry code 1
+            report_data["naeringskode2"] = org_data.get("naeringskode2", {}).get("beskrivelse") if org_data.get("naeringskode2") else report_data.get("naeringskode2")  # Industry code 2
+            report_data["naeringskode3"] = org_data.get("naeringskode3", {}).get("beskrivelse") if org_data.get("naeringskode3") else report_data.get("naeringskode3")  # Industry code 3
+            report_data["antallAnsatte"] = org_data.get("antallAnsatte") if org_data.get("antallAnsatte") else report_data.get("antallAnsatte")  # Number of employees
+            report_data["stiftelsesdato"] = org_data.get("stiftelsesdato") if org_data.get("stiftelsesdato") else report_data.get("stiftelsesdato")  # Date of establishment
+            report_data["vedtektsfestetFormaal"] = org_data.get("vedtektsfestetFormaal") if org_data.get("vedtektsfestetFormaal") else report_data.get("vedtektsfestetFormaal") # Purpose
+            report_data["aktivitet"] = org_data.get("aktivitet") if org_data.get("aktivitet") else report_data.get("aktivitet") # Activity
+
+
+            st.success("Organization information fetched successfully!")
+
+        except requests.exceptions.RequestException as e:
+            st.error(f"Error fetching data from API: {e}")
+        except (KeyError, TypeError, IndexError) as e:  # Add IndexError for list access
+            st.error(f"Error parsing API response. The API might have returned unexpected data or the data structure has changed. Error: {e}")
+    else:
+        st.warning("Please enter an organization number.")
+
+
 report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)
 report_data["reporting_period"] = st.text_input("Reporting Period", value=report_data["reporting_period"])
 report_data["legal_form"] = st.text_input("Legal Form", value=report_data["legal_form"])
