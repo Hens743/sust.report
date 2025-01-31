@@ -41,7 +41,7 @@ report_data["report_title"] = st.text_input("Report Title", value=report_data["r
 report_data["year"] = st.number_input("Year", value=report_data["year"], min_value=2000, max_value=2100)
 
 st.subheader("Organization Information")
-report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
+
 org_number = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
 
 if st.button("Fetch Organization Information"):
