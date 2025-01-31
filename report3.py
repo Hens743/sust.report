@@ -27,6 +27,7 @@ if "report_data" not in st.session_state:
         "governance": "Our board of directors oversees our sustainability strategy...",
         "stakeholder_engagement": "We engage with our stakeholders through surveys, community events, and online platforms...",
         "reporting_process": "This report was compiled by the sustainability team...",
+        "organization_number": "",  # Add organization number field
         "material_topics": [{"name": "Environmental Impact", "description": "Reducing our carbon footprint and minimizing waste..."}],
         "metrics": [{"name": "Energy Consumption", "2022": 15000, "2023_target": 14000, "2023": 14500}]
     }
@@ -51,7 +52,7 @@ report_data["activities"] = st.text_area("Activities and Value Chain", value=rep
 report_data["governance"] = st.text_area("Governance", value=report_data["governance"], height=150)
 report_data["stakeholder_engagement"] = st.text_area("Stakeholder Engagement", value=report_data["stakeholder_engagement"], height=150)
 report_data["reporting_process"] = st.text_area("Reporting Process", value=report_data["reporting_process"], height=150)
-
+report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
 
 st.subheader("Material Topics")
 new_topic = st.text_input("New Material Topic (e.g., Community Engagement)")
