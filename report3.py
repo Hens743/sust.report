@@ -43,7 +43,7 @@ report_data["year"] = st.number_input("Year", value=report_data["year"], min_val
 
 st.subheader("Organization Information")
 
-org_number = st.text_input("Organization Number", value=report_data["organization_number"])
+org_number = st.text_input("Organization Number", value=report_data["organization_number"])  # ONLY ONE input field for org number
 
 if st.button("Fetch Organization Information"):
     if org_number:
@@ -53,19 +53,19 @@ if st.button("Fetch Organization Information"):
             response.raise_for_status()
             org_data = response.json()
 
-            # Update report_data with API values ONLY if they exist in the response
-            report_data["organization_name"] = org_data.get("navn") or report_data["organization_name"]  # Use existing value if API doesn't provide it
-            report_data["legal_form"] = org_data.get("organisasjonsform", {}).get("beskrivelse") or report_data["legal_form"]
-            report_data["hjemmeside"] = org_data.get("hjemmeside") or report_data.get("hjemmeside")
+            # Extract relevant information from the API response and update report_data
+            report_data["organization_name"] = org_data.get("navn") if org_data.get("navn") else report_data["organization_name"]
+            report_data["legal_form"] = org_data.get("organisasjonsform", {}).get("beskrivelse") if org_data.get("organisasjonsform") else report_data["legal_form"]
+            report_data["hjemmeside"] = org_data.get("hjemmeside") if org_data.get("hjemmeside") else report_data.get("hjemmeside")
             report_data["postadresse"] = f"{org_data.get('postadresse', {}).get('adresse', [])[0] if org_data.get('postadresse', {}).get('adresse') else ''} {org_data.get('postadresse', {}).get('postnummer') or ''} {org_data.get('postadresse', {}).get('poststed') or ''}" if org_data.get('postadresse') else report_data.get("postadresse")
             report_data["forretningsadresse"] = f"{org_data.get('forretningsadresse', {}).get('adresse', [])[0] if org_data.get('forretningsadresse', {}).get('adresse') else ''} {org_data.get('forretningsadresse', {}).get('postnummer') or ''} {org_data.get('forretningsadresse', {}).get('poststed') or ''}" if org_data.get('forretningsadresse') else report_data.get("forretningsadresse")
-            report_data["naeringskode1"] = org_data.get("naeringskode1", {}).get("beskrivelse") or report_data.get("naeringskode1")
-            report_data["naeringskode2"] = org_data.get("naeringskode2", {}).get("beskrivelse") or report_data.get("naeringskode2")
-            report_data["naeringskode3"] = org_data.get("naeringskode3", {}).get("beskrivelse") or report_data.get("naeringskode3")
-            report_data["antallAnsatte"] = org_data.get("antallAnsatte") or report_data.get("antallAnsatte")
-            report_data["stiftelsesdato"] = org_data.get("stiftelsesdato") or report_data.get("stiftelsesdato")
-            report_data["vedtektsfestetFormaal"] = org_data.get("vedtektsfestetFormaal") or report_data.get("vedtektsfestetFormaal")
-            report_data["aktivitet"] = org_data.get("aktivitet") or report_data.get("aktivitet")
+            report_data["naeringskode1"] = org_data.get("naeringskode1", {}).get("beskrivelse") if org_data.get("naeringskode1") else report_data.get("naeringskode1")
+            report_data["naeringskode2"] = org_data.get("naeringskode2", {}).get("beskrivelse") if org_data.get("naeringskode2") else report_data.get("naeringskode2")
+            report_data["naeringskode3"] = org_data.get("naeringskode3", {}).get("beskrivelse") if org_data.get("naeringskode3") else report_data.get("naeringskode3")
+            report_data["antallAnsatte"] = org_data.get("antallAnsatte") if org_data.get("antallAnsatte") else report_data.get("antallAnsatte")
+            report_data["stiftelsesdato"] = org_data.get("stiftelsesdato") if org_data.get("stiftelsesdato") else report_data.get("stiftelsesdato")
+            report_data["vedtektsfestetFormaal"] = org_data.get("vedtektsfestetFormaal") if org_data.get("vedtektsfestetFormaal") else report_data.get("vedtektsfestetFormaal")
+            report_data["aktivitet"] = org_data.get("aktivitet") if org_data.get("aktivitet") else report_data.get("aktivitet")
 
             st.success("Organization information fetched successfully!")
 
@@ -77,21 +77,16 @@ if st.button("Fetch Organization Information"):
         st.warning("Please enter an organization number.")
 
 
-report_data["organization_name"] = st.text_input("Organization Name", value=report_data["organization_name"]) # Now the input will show the value from the API or the default one
+report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)
+report_data["reporting_period"] = st.text_input("Reporting Period", value=report_data["reporting_period"])
 report_data["legal_form"] = st.text_input("Legal Form", value=report_data["legal_form"])
-report_data["hjemmeside"] = st.text_input("Website", value=report_data["hjemmeside"])
-report_data["postadresse"] = st.text_input("Postal Address", value=report_data["postadresse"])
-report_data["forretningsadresse"] = st.text_input("Business Address", value=report_data["forretningsadresse"])
-report_data["naeringskode1"] = st.text_input("Industry Code 1", value=report_data["naeringskode1"])
-report_data["naeringskode2"] = st.text_input("Industry Code 2", value=report_data["naeringskode2"])
-report_data["naeringskode3"] = st.text_input("Industry Code 3", value=report_data["naeringskode3"])
-report_data["antallAnsatte"] = st.text_input("Number of Employees", value=report_data["antallAnsatte"])
-report_data["stiftelsesdato"] = st.text_input("Date of Establishment", value=report_data["stiftelsesdato"])
-report_data["vedtektsfestetFormaal"] = st.text_area("Purpose", value=report_data["vedtektsfestetFormaal"], height=150)
-report_data["aktivitet"] = st.text_area("Activity", value=report_data["aktivitet"], height=150)
-
-
-
+report_data["ownership"] = st.text_input("Ownership", value=report_data["ownership"])
+report_data["location"] = st.text_input("Location", value=report_data["location"])
+report_data["employees"] = st.text_input("Number of Employees", value=report_data["employees"])
+report_data["activities"] = st.text_area("Activities and Value Chain", value=report_data["activities"], height=150)
+report_data["governance"] = st.text_area("Governance", value=report_data["governance"], height=150)
+report_data["stakeholder_engagement"] = st.text_area("Stakeholder Engagement", value=report_data["stakeholder_engagement"], height=150)
+report_data["reporting_process"] = st.text_area("Reporting Process", value=report_data["reporting_process"], height=150)
 
 
 
