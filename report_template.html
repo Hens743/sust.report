@@ -85,25 +85,25 @@
 
     <section id="introduction">
         <h2>1. Introduction</h2>
-        <p><b>1.1 About [Organization Name]:</b> [Briefly describe your organization. Include mission, values, and core activities.]</p>
-        <p><b>1.2 Organization Number:</b> {{ data.organization_number }}
-        <p><b>1.3 Statement from Leadership:</b> [A message from the head of the organization emphasizing commitment to sustainability.]</p>
-        <p><b>1.4 Reporting Period and Scope:</b> [Specify the time frame and what parts of the organization are included.]</p>
+        <p><b>1.1 About {{ data.organization_name_en }}:</b> [Briefly describe your organization. Include mission, values, and core activities.]</p>
+        <p><b>1.2 Organization Number:</b> {{ data.organization_number }}</p>
+        <p><b>1.3 Statement from Leadership:</b> {{ data.leadership_statement }}</p>
+        <p><b>1.4 Reporting Period and Scope:</b> {{ data.reporting_period }}</p>
     </section>
 
     <section id="general-disclosures">
         <h2>2. General Disclosures (GRI 2)</h2>
         <p><b>2.1 Organizational Profile:</b></p>
         <ul>
-            <li>Legal form: [e.g., Corporation, LLC, Non-profit]</li>
-            <li>Ownership: [e.g., Publicly traded, Privately held, Family-owned]</li>
-            <li>Location: [Full address]</li>
-            <li>Number of employees: [Number and breakdown (e.g., full-time, part-time)]</li>
-        </ul>
-        <p><b>2.2 Activities and Value Chain:</b> [Describe main activities and key suppliers and customers.]</p>
-        <p><b>2.3 Governance:</b> [Briefly describe your governance structure.]</p>
-        <p><b>2.4 Stakeholder Engagement:</b> [How do you engage with key stakeholders?]</p>
-        <p><b>2.5 Reporting Process:</b> [Explain how the report was prepared.]</p>
+            <li>Legal form: {{ data.legal_form }}</li>
+            <li>Ownership: {{ data.ownership }}</li>
+            <li>Location: {{ data.location }}</li>
+            <li>Number of employees: {{ data.employees }}</li>
+            <li>Website: {{ data.hjemmeside }}</li>  <li>Postal Address: {{ data.postadresse }}</li> <li>Business Address: {{ data.forretningsadresse }}</li> <li>Industry Code 1: {{ data.naeringskode1 }}</li> <li>Industry Code 2: {{ data.naeringskode2 }}</li> <li>Industry Code 3: {{ data.naeringskode3 }}</li> <li>Date of Establishment: {{ data.stiftelsesdato }}</li> <li>Purpose: {{ data.vedtektsfestetFormaal }}</li> <li>Activity: {{ data.aktivitet }}</li> </ul>
+        <p><b>2.2 Activities and Value Chain:</b> {{ data.activities }}</p>
+        <p><b>2.3 Governance:</b> {{ data.governance }}</p>
+        <p><b>2.4 Stakeholder Engagement:</b> {{ data.stakeholder_engagement }}</p>
+        <p><b>2.5 Reporting Process:</b> {{ data.reporting_process }}</p>
     </section>
 
     <section id="material-topics">
@@ -111,9 +111,9 @@
         <p><b>3.1 Identifying Material Topics:</b> [Describe the process used to identify material topics.]</p>
         <p><b>3.2 List of Material Topics:</b></p>
         <ul>
-            <li>[Material Topic 1]</li>
-            <li>[Material Topic 2]</li>
-            <li>[Material Topic 3]</li>
+            {% for topic in data.material_topics %}
+            <li>{{ topic.name }}: {{ topic.description }}</li>
+            {% endfor %}
         </ul>
     </section>
 
@@ -121,15 +121,13 @@
         <h2>4. Topic-Specific Disclosures</h2>
 
         {% for metric in data.metrics %}
-        <h3>{{ metric.Metric }}</h3>
-        <ul>
+        <h3>{{ metric.name }}</h3>  <ul>
             <li><b>2022:</b> {{ metric['2022'] }}</li>
             <li><b>2023:</b> {{ metric['2023'] }}</li>
-            <li><b>Target:</b> {{ metric['2023 (Target)'] }}</li>
-            </ul>
+            <li><b>Target:</b> {{ metric['2023_target'] }}</li> </ul>
         {% endfor %}
 
-        </section>
+    </section>
 
     <section id="conclusion">
         <h2>5. Conclusion</h2>
