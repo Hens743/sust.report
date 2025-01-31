@@ -42,8 +42,6 @@ report_data["year"] = st.number_input("Year", value=report_data["year"], min_val
 
 st.subheader("Organization Information")
 report_data["organization_number"] = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
-
-report_data["organization_name"] = st.text_input("Organization Name", value=report_data["organization_name"])
 org_number = st.text_input("Organization Number", value=report_data["organization_number"])  # Input for organization number
 
 if st.button("Fetch Organization Information"):
@@ -78,6 +76,17 @@ if st.button("Fetch Organization Information"):
     else:
         st.warning("Please enter an organization number.")
 
+
+report_data["leadership_statement"] = st.text_area("Leadership Statement", value=report_data["leadership_statement"], height=150)
+report_data["reporting_period"] = st.text_input("Reporting Period", value=report_data["reporting_period"])
+report_data["legal_form"] = st.text_input("Legal Form", value=report_data["legal_form"])
+report_data["ownership"] = st.text_input("Ownership", value=report_data["ownership"])
+report_data["location"] = st.text_input("Location", value=report_data["location"])
+report_data["employees"] = st.text_input("Number of Employees", value=report_data["employees"])
+report_data["activities"] = st.text_area("Activities and Value Chain", value=report_data["activities"], height=150)
+report_data["governance"] = st.text_area("Governance", value=report_data["governance"], height=150)
+report_data["stakeholder_engagement"] = st.text_area("Stakeholder Engagement", value=report_data["stakeholder_engagement"], height=150)
+report_data["reporting_process"] = st.text_area("Reporting Process", value=report_data["reporting_process"], height=150)
 
 
 st.subheader("Material Topics")
