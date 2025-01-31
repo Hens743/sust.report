@@ -6,6 +6,7 @@ import json
 from jinja2 import Template
 import os
 from weasyprint import HTML
+import requests
 
 st.set_page_config(layout="wide")
 
